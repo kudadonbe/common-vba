@@ -50,6 +50,7 @@ Public  Sub LoadReceiptData()
     Dim filteredRows As Variant ' 1D array to store the filtered rows
     Dim fundCode As Variant
     Dim accountNo As String
+    Dim payType As String
 
     Dim releaseNoteNo As String
     Dim releasedName As String
@@ -63,6 +64,9 @@ Public  Sub LoadReceiptData()
     Dim accountantDesig As String
     Dim accountantDate As String
     Dim note As String
+    Dim dateFrom As Date
+    Dim dateTo As Date
+    
 
     Dim incomeCodeformulaResult As Variant
     Dim incomeCodeformulaResultAsString As Variant
@@ -76,6 +80,8 @@ Public  Sub LoadReceiptData()
     Dim entryTotalCol As Integer
     Dim activityCol As Integer
     Dim isCancelCol As Integer
+    Dim dateCol As Integer
+    Dim payTypeCol As Integer
 
 
     releaseNoteNo = Range("A" & ActiveCell.Row).Text
@@ -93,6 +99,9 @@ Public  Sub LoadReceiptData()
     accountantDesig = Range("L" & ActiveCell.Row).Text
     accountantDate = Range("M" & ActiveCell.Row).Text
     note = Range("N" & ActiveCell.Row).Text
+    dateFrom = Range("O" & ActiveCell.Row).Value
+    dateTo = Range("P" & ActiveCell.Row).Value
+    payType = Range("Y" & ActiveCell.Row).Value
     ' incomeCodeformulaResult = Range("D" & ActiveCell.Row).Value
     ' incomeCodeformulaResultAsString = Replace(incomeCodeformulaResult, " ", "")
     ' incomeCode = Split(incomeCodeformulaResultAsString, ",")
@@ -105,13 +114,15 @@ Public  Sub LoadReceiptData()
     isCancelCol = 23
 
     acctNoCol = 11 'Assuming accountNo is in column 11
-    incomeCodeCol = 7 'Assuming incomeCode is in column 7   
+    incomeCodeCol = 7 'Assuming incomeCode is in column 7
+    dateCol = 4   
+    payTypeCol = 25   
     
     filteredRows = 0
 
     For i = 1 To lastRow
         ' Debug.Print receiptData(i, 10) & vbTab & receiptData(i, fundCol) & vbTab & receiptData(i, receiptNoCol) & vbTab & receiptData(i, entryTotalCol) 
-        If receiptData(i, fundCol) = fundCode And receiptData(i, acctNoCol) = accountNo And receiptData(i, isCancelCol) = "No" Then
+        If receiptData(i, dateCol) >= dateFrom And receiptData(i, dateCol) <= dateTo And receiptData(i, fundCol) = fundCode And receiptData(i, acctNoCol) = accountNo And receiptData(i, isCancelCol) = "No" Then
             filteredRows = filteredRows + 1
             ' Debug.Print receiptData(i, 10) & vbTab & receiptData(i, 9) & vbTab & receiptData(i, 5) & vbTab & receiptData(i, 21) 
             For j = 1 To lastColumn
@@ -147,7 +158,7 @@ Public  Sub LoadReceiptData()
     startRow = 10 'Change to the row number where you want to start inserting
     
     Dim numRows As Long
-    numRows = filteredRows ' Change to the number of rows you want to insert
+    numRows = (filteredRows - 2) ' Change to the number of rows you want to insert
     
     For i = 1 To numRows
         ws.Rows(startRow).Insert shift:=xlDown
