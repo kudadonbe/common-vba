@@ -101,7 +101,7 @@ Public  Sub LoadReceiptData()
     note = Range("N" & ActiveCell.Row).Text
     dateFrom = Range("O" & ActiveCell.Row).Value
     dateTo = Range("P" & ActiveCell.Row).Value
-    payType = Range("Y" & ActiveCell.Row).Value
+    payType = "Cash"
     ' incomeCodeformulaResult = Range("D" & ActiveCell.Row).Value
     ' incomeCodeformulaResultAsString = Replace(incomeCodeformulaResult, " ", "")
     ' incomeCode = Split(incomeCodeformulaResultAsString, ",")
@@ -122,7 +122,7 @@ Public  Sub LoadReceiptData()
 
     For i = 1 To lastRow
         ' Debug.Print receiptData(i, 10) & vbTab & receiptData(i, fundCol) & vbTab & receiptData(i, receiptNoCol) & vbTab & receiptData(i, entryTotalCol) 
-        If receiptData(i, dateCol) >= dateFrom And receiptData(i, dateCol) <= dateTo And receiptData(i, fundCol) = fundCode And receiptData(i, acctNoCol) = accountNo And receiptData(i, isCancelCol) = "No" Then
+        If receiptData(i, dateCol) >= dateFrom And receiptData(i, dateCol) <= dateTo And receiptData(i, fundCol) = fundCode And receiptData(i, acctNoCol) = accountNo And receiptData(i, isCancelCol) = "No" And receiptData(i, payTypeCol) = payType Then
             filteredRows = filteredRows + 1
             ' Debug.Print receiptData(i, 10) & vbTab & receiptData(i, 9) & vbTab & receiptData(i, 5) & vbTab & receiptData(i, 21) 
             For j = 1 To lastColumn
@@ -152,7 +152,7 @@ Public  Sub LoadReceiptData()
     Range("G18").Value = accountantDesig
     Range("G19").Value = accountantDate
     
-
+    
 
     Dim startRow As Long
     startRow = 10 'Change to the row number where you want to start inserting
