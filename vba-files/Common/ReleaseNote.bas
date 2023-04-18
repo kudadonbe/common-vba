@@ -1,36 +1,9 @@
-Public  Sub LoadReceiptData()
-
-    ' MsgBox "Ready",,"Kudadonbe" 
-    Dim receiptData As Variant
+Public  Sub makeReleaseNote()
     Dim newReleaseNoteData(1 To 1000, 1 To 26) As String
-    Dim filePath As Variant
-    Dim templateFilePath As String
     Dim newReleaseNoteFilePath As String
-    Dim lastRow As Long, lastColumn As Long
-    Dim wb As Workbook, ws As Worksheet
-    
-    ' open file dialog to select file
-    filePath = Application.GetOpenFilename(FileFilter:="Excel Files (*.xls*),*.xls*", Title:="Select Excel File")
-    
-    ' exit if no file selected
-    If filePath = False Then Exit Sub
-    
-    ' open workbook and worksheet
-    Set wb = Workbooks.Open(filePath)
-    Set ws = wb.Sheets(1)
-    
-    ' determine last row and column with data
-    lastRow = ws.Cells.Find("*", SearchOrder:=xlByRows, SearchDirection:=xlPrevious).Row
-    lastColumn = ws.Cells.Find("*", SearchOrder:=xlByColumns, SearchDirection:=xlPrevious).Column
-    
-    ' store data into array
-    receiptData = ws.Range(ws.Cells(1, 1), ws.Cells(lastRow, lastColumn)).Value
-    
-    
-    
-    ' close workbook without saving
-    wb.Close SaveChanges:=False
-
+    Dim templateFilePath As String
+    Dim receiptData As Variant
+    receiptData = CommonFun.LoadReceiptData()
     ' Filter the data based on fundCode, accountNo, and incomeCode
     Dim filteredRows As Variant ' 1D array to store the filtered rows
     Dim fundCode As Variant
